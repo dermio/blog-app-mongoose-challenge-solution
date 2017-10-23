@@ -18,9 +18,12 @@ const {TEST_DATABASE_URL} = require("../config");
 chai.use(chaiHttp);
 
 
+// 1 generate Individual Data for Field and Value pairs of Document
+// 2 generate Data for one Document, include Field/Value pairs
+// 3 seed Database with documents (multiple docs)
 
 // Seed with random data in database, so can use Chai's assertion library.
-// The Faker library generates faux values for the blog posts'
+// The Faker library generates fake values for the blog posts'
 // author, title, and content. These values are inserted into Mongo DB.
 function seedBlogPostData() {
   console.log("seeding blog post data");
@@ -32,3 +35,22 @@ function seedBlogPostData() {
 
   return BlogPost.insertMany(seedData); // generates Promise?
 }
+
+// The fake document looks like the blueprint found in the Mongoose Schema
+// Creates an object that represents the blog post.
+function generateBlogPostData() {
+  // Note: I could use only faker methods to generate random data,
+  // or I could generate my own random data.
+  // I'll generate my own random titles in a function I created,
+  // generateTitleName()
+  return {
+    author: {
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName()
+    },
+    title: generateTitleName(),
+    content: faker.lorem.sentences(),
+    created: faker.date.recent()
+  };
+}
+
