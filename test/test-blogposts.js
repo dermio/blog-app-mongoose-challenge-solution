@@ -16,3 +16,19 @@ const {TEST_DATABASE_URL} = require("../config");
 // Chai HTTP extends the Chai assertion library.
 // Allows Chai testing with HTTP APIs.
 chai.use(chaiHttp);
+
+
+
+// Seed with random data in database, so can use Chai's assertion library.
+// The Faker library generates faux values for the blog posts'
+// author, title, and content. These values are inserted into Mongo DB.
+function seedBlogPostData() {
+  console.log("seeding blog post data");
+  let seedData = [];
+
+  for (var i = 0; i < 10; i++) {
+    seedData.push(generateBlogPostData());
+  }
+
+  return BlogPost.insertMany(seedData); // generates Promise?
+}
