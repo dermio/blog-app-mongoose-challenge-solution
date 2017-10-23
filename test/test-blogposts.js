@@ -54,3 +54,9 @@ function generateBlogPostData() {
   };
 }
 
+// Create my own function to generate random title names
+function generateTitleName() {
+  let titles = ["Mr.", "Mrs.", "Miss", "Your Majesty", "Sir",
+                "Ninja", "Master", "Professor", "Guru", "Chef"];
+  return titles[Math.floor(Math.random() * titles.length)];
+}
