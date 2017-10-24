@@ -90,4 +90,15 @@ describe("Blog posts API resource", function () {
 
 
   /***** Test Cases *****/
+  describe("GET endpoint", function () {
+    it("should return all existing blog posts", function () {
+
+    });
+
+    it("should return blog posts with right fields", function () {
+
+    });
+  });
+
+
 });
