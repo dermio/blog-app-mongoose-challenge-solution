@@ -4,7 +4,7 @@ const faker = require("faker");
 const mongoose = require("mongoose");
 
 // Chai is an assertion library for testing.
-// Using the 'should' style of chai in this module.
+// Using the "should" style of chai in this module.
 const should = chai.should();
 
 const {BlogPost} = require("../models");
@@ -59,4 +59,10 @@ function generateTitleName() {
   let titles = ["Mr.", "Mrs.", "Miss", "Your Majesty", "Sir",
                 "Ninja", "Master", "Professor", "Guru", "Chef"];
   return titles[Math.floor(Math.random() * titles.length)];
+}
+
+// Tear down (drop) database after each suite of testing is done
+function tearDownDb() {
+  console.warn("Deleting database");
+  return mongoose.connection.dropDatabase();
 }
