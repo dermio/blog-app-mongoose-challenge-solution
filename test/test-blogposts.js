@@ -66,3 +66,28 @@ function tearDownDb() {
   console.warn("Deleting database");
   return mongoose.connection.dropDatabase();
 }
+
+
+// Mocha's hook functions: before(), after(), afterEach(), beforeEach()
+// The hooks are used to set up pre-conditions and clean up after tests
+describe("Blog posts API resource", function () {
+
+  before(function () {
+    return runServer(TEST_DATABASE_URL);
+  });
+
+  beforeEach(function () {
+    return seedBlogPostData();
+  });
+
+  afterEach(function () {
+    return tearDownDb();
+  });
+
+  after(function () {
+    return closeServer();
+  });
+
+
+  /***** Test Cases *****/
+});
