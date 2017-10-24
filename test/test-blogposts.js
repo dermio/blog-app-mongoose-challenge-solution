@@ -26,7 +26,7 @@ chai.use(chaiHttp);
 // The Faker library generates fake values for the blog posts'
 // author, title, and content. These values are inserted into Mongo DB.
 function seedBlogPostData() {
-  console.log("seeding blog post data");
+  console.info("seeding blog post data");
   let seedData = [];
 
   for (var i = 0; i < 10; i++) {
@@ -103,13 +103,18 @@ describe("Blog posts API resource", function () {
         .then(function (_res) {
           res = _res;
           res.should.have.status(200);
-          res.body.blogposts.should.have.length.of.at.least(1);
+          // res.body.blogPosts.should.have.length.of.at.least(1);
+          // Why is `blogPosts` omitted???
+          // Compare to node-restaurants-app-mongoose example:
+          // res.body.restaurants.should.have.length.of.at.least(1);
+          res.body.should.have.length.of.at.least(1);
+          return BlogPost.count();
         })
     });
 
-    it("should return blog posts with right fields", function () {
+    /*it("should return blog posts with right fields", function () {
 
-    });
+    });*/
   });
 
 
