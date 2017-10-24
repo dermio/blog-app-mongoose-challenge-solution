@@ -92,7 +92,19 @@ describe("Blog posts API resource", function () {
   /***** Test Cases *****/
   describe("GET endpoint", function () {
     it("should return all existing blog posts", function () {
+      // `res` is a variable in a Scope accessible to
+      // all then() function calls. It will be the response object
+      let res;
 
+      // Chai HTTP is a plugin for Chai. Chai uses Chai HTTP through
+      // the command: chai.use(chaiHttp), line 18
+      return chai.request(app)
+        .get("/posts") // get() availabe to Chai HTTP, in Node.js
+        .then(function (_res) {
+          res = _res;
+          res.should.have.status(200);
+          res.body.blogposts.should.have.length.of.at.least(1);
+        })
     });
 
     it("should return blog posts with right fields", function () {
@@ -101,4 +113,4 @@ describe("Blog posts API resource", function () {
   });
 
 
-});
+});  // CANNOT RUN TEST!
