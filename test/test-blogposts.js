@@ -182,7 +182,46 @@ describe("Blog posts API resource", function () {
     });
   });
 
+  describe("POST endpoint", function () {
+    // strategy: make a POST request with data,
+    // then prove that the restaurant we get back has
+    // right keys, and that `id` is there (which means
+    // the data was inserted into db)
 
+    it("should add a new blog post", function () {
+      let newPost = generateBlogPostData();
+
+      return chai.request(app)
+        .post("/posts")
+        .send(newPost)
+        .then(function (res) {
+          //console.log(res)
+          res.should.have.status(201);
+          res.should.be.json;
+          res.body.should.be.a("object");
+          res.body.should.include.keys(
+            "id", "author", "content", "title", "created");
+          res.body.title.should.equal(newPost.title);
+          // Mongo creates a new id when document is inserted into database
+          res.body.id.should.not.be.null;
+          // console.log(res.body.id); // alpha-numeric Id
+          // console.log(newPost.id); // undefined
+
+          res.body.author.should.equal(
+            `${newPost.author.firstName} ${newPost.author.lastName}`);
+          res.body.content.should.equal(newPost.content);
+          // Return a document from Mongo using Mongoose .findById()
+          return BlogPost.findById(res.body.id);
+        })
+        .then(function (post) { // post is a single document from Mongo
+          // console.log(post);
+          post.title.should.equal(newPost.title);
+          post.content.should.equal(newPost.content);
+          post.author.firstName.should.equal(newPost.author.firstName);
+          post.author.lastName.should.equal(newPost.author.lastName);
+        });
+    });
+  });
 
 
 });
