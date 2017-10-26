@@ -50,6 +50,10 @@ function generateBlogPostData() {
     },
     title: generateTitleName(),
     content: faker.lorem.sentences(),
+    // The property `created: date` is not in the original seed data
+    // document, and not in Thinkful's solution.
+    // It seems to work okay in this case, and works with
+    // the model apiRepr method.
     created: faker.date.recent()
   };
 }
@@ -176,9 +180,9 @@ describe("Blog posts API resource", function () {
           // resPost.created.should.equal(post.created.toString());
         });
     });
-
-    
   });
+
+
 
 
 });
