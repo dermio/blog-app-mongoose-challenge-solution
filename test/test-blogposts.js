@@ -263,8 +263,44 @@ describe("Blog posts API resource", function () {
           post.author.lastName.should.equal(updateData.author.lastName);
         });
     });
-
   });
 
+  describe("DELETE endpoint", function () {
+    // strategy:
+    //  1. get a post
+    //  2. make a DELETE request for that post's id
+    //  3. assert that response has right status code
+    //  4. prove that post with the id doesn't exist in db anymore
+
+    it("should delete a post by id", function () {
+      let post;
+
+      return BlogPost.findOne()
+        // _post is an existing document in Mongo returned by findOne()
+        .then(function (_post) {
+          post = _post;
+          // make a DELETE request with the id
+          return chai.request(app).delete(`/posts/${post.id}`);
+        })
+        .then(function (res) { // res sent by DELETE request
+          res.should.have.status(204);
+          // post is a copy of the document before it was deleted, line 281
+          // This should return undefined or null??
+          return BlogPost.findById(post.id);
+        })
+        .then(function (_post) {
+          // _post was returned from the previous .then() method.
+          // It should have a value of undefined or null,
+          // because that document and id no longer exist.
+          should.not.exist(_post);
+
+          // Note: cannot extend null or undefined with should,
+          // because they are not proper objects.
+          // null.should.not.exist is NOT a valid statement
+          // This works: (_post === null).should.be.true
+        });
+    });
+
+  });
 
 });
