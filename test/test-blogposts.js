@@ -223,5 +223,48 @@ describe("Blog posts API resource", function () {
     });
   });
 
+  describe("PUT endpoint", function () {
+    // strategy:
+    //  1. Get an existing post from db
+    //  2. Make a PUT request to update that post
+    //  3. Prove post in db is correctly updated
+    it("should update fields you send over", function () {
+      let updateData = {
+        title: "apple banana cherry",
+        content: "The quick brown fox jumped over the lazy dog",
+        author: {
+          firstName: "Ernest",
+          lastName: "Hemingway"
+        }
+      };
+
+      return BlogPost.findOne()
+        .then(function (post) {
+          updateData.id = post.id;
+          // console.log(updateData.id)
+
+          // make request then inspect it to make sure
+          // it reflects the data that was sent
+          return chai.request(app)
+            .put(`/posts/${post.id}`)
+            .send(updateData);
+        })
+        .then(function (res) {
+          res.should.have.status(204);
+          // returns the document with correct Id
+          return BlogPost.findById(updateData.id);
+        })
+        .then(function (post) {
+          // post is the returned document from Mongo
+          // with the updated values
+          post.title.should.equal(updateData.title);
+          post.content.should.equal(updateData.content);
+          post.author.firstName.should.equal(updateData.author.firstName);
+          post.author.lastName.should.equal(updateData.author.lastName);
+        });
+    });
+
+  });
+
 
 });
