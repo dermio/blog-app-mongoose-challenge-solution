@@ -130,10 +130,55 @@ describe("Blog posts API resource", function () {
         });
     });
 
-    /*it("should return blog posts with right fields", function () {
+    it("should return posts with right fields", function () {
+      // Get back all restaurants, and make sure they have
+      // the right keys and values.
 
-    });*/
+      let resPost;
+      return chai.request(app)
+        .get("/posts")
+        .then(function (res) {
+          res.should.have.status(200);
+          res.should.be.json;
+          res.body.should.be.a("array");
+          res.body.should.have.length.of.at.least(1);
+
+          res.body.forEach(function (post) {
+            post.should.be.a("object");
+            // Use the keys in the returned object from the apiRepr method.
+            // This is because the apiRepr method is called
+            // in the GET request.
+            post.should.include.keys(
+              "id", "author", "content", "title", "created");
+          });
+
+          // Check the Id for one of the posts, then return that doc.
+          // In the next .then() method, check the values
+          // in the post document/object matches the database.
+          resPost = res.body[0];
+          return BlogPost.findById(resPost.id);
+        })
+        // The `resPost` is the response that's sent back to the Client.
+        // In the GET request, the apiRepr method will send back
+        // to the Client a representation of the post document
+        // in the database, instead of the document itself.
+        // The `post` is the actual document in the Mongo DB
+        // found by the Mongoose command findById().
+        .then(function (post) {
+          // console.log(resPost);
+          // console.log(post);
+          resPost.id.should.equal(post.id);
+          // resPost.author.should.equal(post.authorName); // also correct
+          resPost.author.should.contain(post.author.lastName);
+          resPost.content.should.equal(post.content);
+          resPost.title.should.equal(post.title);
+          // I can't get the date to work correctly
+          // resPost.created.should.equal(post.created.toString());
+        });
+    });
+
+    
   });
 
 
-});  // CANNOT RUN TEST!
+});
