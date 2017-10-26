@@ -103,15 +103,30 @@ describe("Blog posts API resource", function () {
         .then(function (_res) {
           res = _res;
           res.should.have.status(200);
-          // res.body.blogPosts.should.have.length.of.at.least(1);
-          // Why is `blogPosts` omitted???
-          // Compare to node-restaurants-app-mongoose example:
+          // res.body.posts.should.have.length.of.at.least(1);
+          // Q. Why is `posts` omitted???
+          // A. Compare to node-restaurants-app-mongoose example:
           // res.body.restaurants.should.have.length.of.at.least(1);
+          // The server module for node restaurant-app, lines 28-31,
+          // returns an object with key `restaurant`, and an array
+          // of document restaurants.
+          // The server module for blog-app returns an array
+          // of document restaurants.
+          // console.log(res.body);
           res.body.should.have.length.of.at.least(1);
+          
           return BlogPost.count();
         })
-        .then(function (count) => {
-          res.body.should.have.length.of(count);
+        .then(function (count) {
+          // console.log("[[CONSOLE.LOG]]", res.body.should.have.length.of);
+          // compare to node-restaurants-app-mongoose
+          // changed from `length.of` to `lengthOf
+          // I get the following error:
+          // `TypeError: res.body.should.have.length.of is not a function`
+          // res.body.should.have.length.of(count); // old code doesn't work
+          res.body.should.have.lengthOf(count);
+          // the number of returned posts should be
+          // the same as the number of posts in MongoDB
         });
     });
 
