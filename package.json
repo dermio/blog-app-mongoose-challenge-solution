@@ -5,8 +5,6 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    // Use the --exit option for Mocha v4.x,
-    // to force the shutdown of the Mocha process
     "test": "mocha --exit"
   },
   "dependencies": {
