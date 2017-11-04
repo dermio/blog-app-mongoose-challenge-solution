@@ -2,3 +2,10 @@ language: node_js
 node_js: node
 services:
 - mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: c9ClqP52FMkWxUptRzlPyBiDm4pn1zR2d4vG4H4lXQsIbjCZG0ncIexfu+XlB//9lgpyvsxaiKx8qmVg6ZGWupOlOO8RE4FvoH9U4q3n5du2aDp1FAIEhmLRgPMsudP3GvKIEsU7jyK0J7RVBTtw/cwFY4YJXyLV/Ne4zbjDnvC/uMlP1QW8iFxmBi+MDOyEn8pnacP/Dlc40IiV6fs+wm2lYGsvWjFF2Dl8wqa3T5/3CGoi26Pyhw4Kr436mSLqtTfuBnrK5tEZNzIumxwA5pnjzWTUQLoYT2VhjWG3KfNHpHbefuDWYikRFhurU4RO6s5knHh8xFa5oGLO2K7W/8j7GLmAKqnnrMs2iGvF1IehF4F3u4hYqwSJ6iWIy9i3Jlg9gPfUWeSHilIZ54q7eyB6mYT9/TTslxG1a2SpUuy8+vkueh9Dsov3n0LzSn2RW6IruBDvp1zuLi6Bz/mNze5Wkd61S5D9b/3h9IF0csKaaGvYDZBhtLasYSHn4A2z2h4eZ6hnHrTlVVDq+Z3jm7vkqqpYZE6mXWI9grm7jffWKIXRy9LIs9sg+8Qp3NSZvM+0++2DvsnThbdDUIGEc2C7XrTDpXPFVB2Y3nfdCNmdX8jds5GIOmL0Hh0UO494ecRyVWNufu5qmHK0VoZCUiO/nQ7bH0+TqxHTZC3LdgE=
+  app: warm-hamlet-38565
+  on:
+    repo: dermio/blog-app-mongoose-challenge-solution
